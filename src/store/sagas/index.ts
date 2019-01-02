@@ -26,7 +26,7 @@ function* login(){
 }
 function* watchIncrementAsync() {
 	let token = yield call(service.home.login,"username","password");
-	console.log(token);
+	// console.log(token);
 }
 
 export function* rootSaga({dispatch,getState}){

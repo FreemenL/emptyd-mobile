@@ -1,8 +1,44 @@
 # emptyd-admin-webpack
 基于typescript react webpack的脚手架 
->说明：一些第三方库缺少或者类型声明文件错误的情况下 ，需要手动编写类型声明文件或者对原本的文件进行改 ，此脚手架中所依赖的redux-persist的类型声明文件有误， 所以需要手动修改 ，可以直接拿[这个文件](https://github.com/FreemenL/react16-redux-typescript-webpck4-antd/blob/master/index.d.ts)覆盖 node_modules/redux-persist/src/index.d.ts
+>说明：移动端适配采用的是vw vh 方案  具体配置如下  相对rem的好处就是 不同去单独处理iphone4和ipbone5的是适配
 
->因为该项目部署了Jinkens 所以直接把服务器上的依赖包进行了修改， 所以在package.json 中去掉了redux-persist依赖项 ```所以需要在install 之后单独下载redux-persist依赖 并且按上面步骤进行操作```
+```javascript 
+module.exports = (ctx) => ({
+  parser: ctx.parser ? 'sugarss' : false,
+  map: ctx.env === 'development' ? ctx.map : false,
+  plugins: {
+    'postcss-import': {}, // 在@import css文件的时候让webpack监听并编译
+    'cssnano': {
+      preset: "advanced", 
+      autoprefixer: false, 
+      "postcss-zindex": false
+    }, // 包含优化CSS大小的插件，以便在生产中使用。
+    'atcss': {},
+    "postcss-url": {},
+    "postcss-aspect-ratio-mini": {},
+    // https://github.com/csstools/postcss-preset-env    css的polyfill
+    'postcss-preset-env': { stage: 0, autoprefixer: { grid: true } },
+    "postcss-viewport-units":{},
+    'postcss-px-to-viewport': {
+      // 视窗的宽度，对应的是我们设计稿的宽度，一般是750 
+      viewportWidth: 375,
+      // 视窗的高度，根据750设备的宽度来指定，一般指定1334，也可以不配置 
+      // viewportHeight: 1334,
+      // 指定`px`转换为视窗单位值的小数位数（很多时候无法整除）
+      unitPrecision: 3,
+      // 指定需要转换成的视窗单位，建议使用vw 
+      viewportUnit: 'vw',
+      // 指定不转换为视窗单位的类，可以自定义，可以无限添加,建议定义一至两个通用的类名
+      selectorBlackList: ['.ignore', '.hairlines'],
+      // 小于或等于`1px`不转换为视窗单位，你也可以设置为你想要的值 
+      minPixelValue: 1,
+      // 允许在媒体查询中转换`px` 
+      mediaQuery: false
+    }
+  }
+})
+
+```
 
 ### 关于本项目功能
 
